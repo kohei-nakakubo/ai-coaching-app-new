@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>【AI診断】コーチング＆ヒューニング 必要度チェック</title>
+
+    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+    <!-- ★ 変更点：Google Analyticsのトラッキングコードをここに追加 -->
+    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67KB6C3CTR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // 下の 'G-67KB6C3CTR' を、あなた自身の測定IDに書き換えてください。
+      gtag('config', 'G-67KB6C3CTR');
+    </script>
+    <!-- End Google Analytics -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
@@ -96,16 +112,9 @@
             resultArea.scrollIntoView({ behavior: 'smooth' });
             diagnosisButton.disabled = true; diagnosisButton.textContent = '診断中...';
             try {
-                // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-                // ★ 変更点：診断と提案を一度に行うようにAIへの指示を統合
-                // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
                 const prompt = `あなたはプロのコーチです。ある人が自己診断で以下の項目にチェックを入れました。\n\nチェック項目:\n- ${checkedItemsText.join('\n- ')}\n\nこの結果に基づき、以下の2つのパートを含む、温かく力づけるメッセージを生成してください。\n\nパート1: まず、相手の状況に共感し、それらの課題が成長の機会であることを示唆するパーソナルメッセージを2〜3文で述べます。\nパート2: 次に、その流れで自然に、なぜ「専門家との対話（無料体験セッション）」が有効な次の一手なのか、その理由を簡潔に1〜2文で説明します。「一人で考え込むよりも、対話を通して思考を整理し、客観的な視点を得ることが現状を打破するきっかけになる」という点を強調してください。\n\nパート1とパート2の間は改行を一つ入れてください。`;
                 const aiMessage = await callGemini(prompt);
                 const formsLink = 'https://ws.formzu.net/fgen/S694819392/';
-
-                // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-                // ★ 変更点：診断結果と申し込みボタンを直接表示
-                // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
                 resultArea.innerHTML = `
                     <h3 class="text-xl font-semibold mb-3">AIによるパーソナル診断結果</h3>
                     <div class="ai-generated-content mb-6 whitespace-pre-wrap">${aiMessage.replace(/\n/g, '<br><br>')}</div>

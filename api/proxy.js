@@ -43,6 +43,7 @@ export default async function handler(request, response) {
     if (!geminiResponse.ok) {
       const errorText = await geminiResponse.text();
       console.error("Gemini APIからのエラーレスポンス:", errorText);
+      // Geminiからのエラー内容をクライアントに伝えないように、一般的なエラーメッセージを返します。
       throw new Error('Gemini APIとの通信に失敗しました。');
     }
 
@@ -55,6 +56,7 @@ export default async function handler(request, response) {
     return response.status(200).json({ text: generatedText });
 
   } catch (error) {
+    // なにか問題が発生した場合の包括的なエラー処理
     console.error('Vercel Function内でエラーが発生しました:', error.message);
     return response.status(500).json({ error: 'サーバー内部でエラーが発生しました。詳細はVercelのログを確認してください。' });
   }
